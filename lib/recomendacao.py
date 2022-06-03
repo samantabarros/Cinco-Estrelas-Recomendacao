@@ -8,18 +8,19 @@ import pymongo
 con = Conexao()
 dadosMongo = con.lista_livros()
 
-avaliacoesItens = {}
-avaliacoesUsuarios = {}
+ratingsItens = {}
+ratingsUsuarios = {}
 
 for dados in dadosMongo:
 	for k, v in dados.items():
-		avaliacoesItens[k] = v
-print(avaliacoesItens)
+		ratingsItens[k] = v
+print(ratingsItens)
+
 
 # Dados estaticos - Apenas para testes
-avaliacoes = {'Ana': 
+ratings = {'Ana': 
 		{'Um dia': 2.5, 
-		 'Filha da Floresta': 3.5,
+		 'Rapido e Devagar': 3.5,
 		 'Amanhecer': 3.0, 
 		 'Orgulho e Preconceito': 3.5, 
 		 'O Hobbit': 2.5,
@@ -27,7 +28,7 @@ avaliacoes = {'Ana':
 	 
 	  'Marcos': 
 		{'Um dia': 3.0, 
-		 'Filha da Floresta': 3.5, 
+		 'Rapido e Devagar': 3.5, 
 		 'Amanhecer': 1.5, 
 		 'Orgulho e Preconceito': 5.0, 
 		 'O Código da Vinci': 3.0, 
@@ -35,12 +36,12 @@ avaliacoes = {'Ana':
 
 	  'Pedro': 
 	    {'Um dia': 2.5, 
-		 'Filha da Floresta': 3.0,
+		 'Rapido e Devagar': 3.0,
 		 'Orgulho e Preconceito': 3.5, 
 		 'O Código da Vinci': 4.0},
 			 
 	  'Claudia': 
-		{'Filha da Floresta': 3.5, 
+		{'Rapido e Devagar': 3.5, 
 		 'Amanhecer': 3.0,
 		 'O Código da Vinci': 4.5, 
 		 'Orgulho e Preconceito': 4.0, 
@@ -48,7 +49,7 @@ avaliacoes = {'Ana':
 				 
 	  'Adriano': 
 		{'Um dia': 3.0, 
-		 'Filha da Floresta': 4.0, 
+		 'Rapido e Devagar': 4.0, 
 		 'Amanhecer': 2.0, 
 		 'Orgulho e Preconceito': 3.0, 
 		 'O Código da Vinci': 3.0,
@@ -56,13 +57,13 @@ avaliacoes = {'Ana':
 
 	  'Janaina': 
 	     {'Um dia': 3.0, 
-	      'Filha da Floresta': 4.0,
+	      'Rapido e Devagar': 4.0,
 	      'O Código da Vinci': 3.0, 
 	      'Orgulho e Preconceito': 5.0, 
 	      'O Hobbit': 3.5},
 			  
-	  'Leonardo': 
-	    {'Filha da Floresta':4.5,
+	  'Adriano': 
+	    {'Rapido e Devagar':4.5,
              'O Hobbit':1.0,
 	     'Orgulho e Preconceito':4.0},
     'Luana':
@@ -98,7 +99,7 @@ def getSimilares(base, book):
     return similaridade[0:30] # 30 primeiros registros
 
 # Função Itens similares
-def calculaItensSimilares(base=avaliacoesItens):
+def calculaItensSimilares(base=ratingsItens):
     result = {}
     for i in base:
         notas = getSimilares(base,  i)
@@ -107,11 +108,11 @@ def calculaItensSimilares(base=avaliacoesItens):
     print()
 
 # Salva os dados na variavel
-itensSimilares = calculaItensSimilares(avaliacoesItens)
+itensSimilares = calculaItensSimilares(ratingsItens)
 
 # Função recomendar
-def getRecomendacoesItens(baseUsuario=avaliacoes, similaridadeItens=itensSimilares, usuario='Samanta'):
-    notasUsuario = baseUsuario[usuario]
+def getRecomendacoesItens(baseUsuario=ratings, similaridadeItens=itensSimilares, id=0):
+    notasUsuario = baseUsuario[id]
     notas = {}
     totalSimilaridades = {}
     

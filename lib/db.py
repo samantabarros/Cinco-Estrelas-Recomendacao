@@ -1,10 +1,12 @@
 from pymongo import MongoClient
 
+from collections import Counter
+
+
 class Conexao:
     def __init__(self):
-        #self.conexao = MongoClient('mongodb://localhost:27017')
-        self.conexao = MongoClient("localhost", 27017)
-        #print(conexao.list_databases_names())
+        self.conexao = MongoClient('mongodb://localhost:27017')
+        #self.conexao = MongoClient("localhost", 27017)
 
 
         # Banco recomendacao
@@ -15,4 +17,6 @@ class Conexao:
 
     # Documentos - Sem id
     def lista_livros(self):
-        return self.col_livros.find({}, {"_id":0})
+        return self.col_livros.find({}, {"Book-Title": "Classical Mythology"})
+
+    
